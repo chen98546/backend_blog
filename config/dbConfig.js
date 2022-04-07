@@ -1,6 +1,6 @@
 // dotenv是一个将环境变量从.env文件加载到process.env中的模块
 let dotenv = require('dotenv').config({
-    path: './env/.env'
+    path: '.env'
 });
 
 

@@ -4,7 +4,7 @@ let router = require('./router/router.js');
 
 // dotenv是一个将环境变量从.env文件加载到process.env中的模块
 let dotenv = require('dotenv').config({
-    path: './env/.env'
+    path: '.env'
 });
 
 // // dotenv.parsed 将.env文件中的环境变量解析成一个对象
