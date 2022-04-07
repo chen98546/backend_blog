@@ -3,8 +3,10 @@ let controller = require('../controller/controller.js');
 let router = express.Router();
 
 let {
-    getIndex
+    getIndex,
+    getLogin
 } = controller;
 router.get('/', getIndex)
+router.get('/login', getLogin)
 
 module.exports = router;
