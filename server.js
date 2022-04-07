@@ -7,21 +7,23 @@ let dotenv = require('dotenv').config({
     path: '.env'
 });
 
-// dotenv.parsed 将.env文件中的环境变量解析成一个对象
-console.log(dotenv.parsed);
+// // dotenv.parsed 将.env文件中的环境变量解析成一个对象
+// console.log(dotenv.parsed);
 
-// process.env.SECRET_KEY 将.env文件中的环境变量加载到process.env中
-console.log(process.env.SECRET_KEY);
-console.log(process.env.S3_BUCKET);
+let {
+    PORT
+} = dotenv.parsed;
 
-// s3.getBucketCors({Bucket: process.env.S3_BUCKET}, function(err, data) {})
-let app = express(); 
+// // process.env.PORT 将.env文件中的环境变量加载到process.env中
+// console.log(process.env.PORT);
+
+let app = express();
 
 app.use(express.static(path.join(__dirname, 'assets')));
 app.use(express.static(path.join(__dirname, 'images')));
 app.use(router)
 
 
-app.listen(12580, () => {
-    console.log('server is running at port 12580');
+app.listen(PORT, () => {
+    console.log(`server is running at port ${PORT}`);
 })

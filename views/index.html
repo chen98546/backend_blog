@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>德德后台管理系统</title>
+  <title>博客后台管理系统</title>
   <link rel="stylesheet" href="/layui/css/layui.css">
 </head>
 
@@ -19,11 +19,11 @@
           <i class="layui-icon layui-icon-spread-left"></i>
         </li>
 
-        <li class="layui-nav-item layui-hide-xs"><a href="">nav 1</a></li>
-        <li class="layui-nav-item layui-hide-xs"><a href="">nav 2</a></li>
-        <li class="layui-nav-item layui-hide-xs"><a href="">nav 3</a></li>
+        <li class="layui-nav-item layui-hide-xs"><a href="">体育</a></li>
+        <li class="layui-nav-item layui-hide-xs"><a href="">财经</a></li>
+        <li class="layui-nav-item layui-hide-xs"><a href="">军事</a></li>
         <li class="layui-nav-item">
-          <a href="javascript:;">nav groups</a>
+          <a href="javascript:;">其他</a>
           <dl class="layui-nav-child">
             <dd><a href="">menu 11</a></dd>
             <dd><a href="">menu 22</a></dd>
@@ -79,7 +79,7 @@
 
     <div class="layui-body">
       <!-- 内容主体区域 -->
-      <div style="padding: 15px;">内容主体区域.</div>
+      <div style="padding: 15px;" id="content"></div>
     </div>
 
     <div class="layui-footer">
@@ -89,7 +89,6 @@
   </div>
   <script src="/layui/layui.js"></script>
   <script>
-    //JS 
     layui.use(['element', 'layer', 'util'], function () {
       var element = layui.element,
         layer = layui.layer,
@@ -117,6 +116,14 @@
         }
       });
 
+
+      $.ajax({
+        url: `${process.env.URL}/getIndexData`,
+        type: 'get',
+      }).then(res => {
+        document.getElementById('content').innerHTML = 123
+        console.log(res);
+      })
     });
   </script>
 </body>

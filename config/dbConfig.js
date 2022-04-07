@@ -1,7 +1,21 @@
+// dotenv是一个将环境变量从.env文件加载到process.env中的模块
+let dotenv = require('dotenv').config({
+    path: '.env'
+});
+
+
+let {
+    SQLHOST,
+    SQLPORT,
+    SQLUSER,
+    SQLPASSWORD,
+    SQLDATABASE
+} = dotenv.parsed;
+
 module.exports = {
-    host: 'localhost',
-    port: "3306",
-    user: 'root',
-    password: 'root',
-    database: 'article_info'
+    host: SQLHOST,
+    port: SQLPORT,
+    user: SQLUSER,
+    password: SQLPASSWORD,
+    database: SQLDATABASE
 }
