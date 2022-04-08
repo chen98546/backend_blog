@@ -1,0 +1,111 @@
+<!-- 继承公共模板 -->
+{{extend './common/page.html'}}
+
+
+
+<!-- 头部区域 -->
+{{block 'title'}}
+
+<title>博客后台管理系统</title>
+<link rel="stylesheet" href="/layui/css/layui.css">
+{{/block}}
+
+
+
+
+<!-- body主体内容区域 -->
+{{block 'content'}}
+
+<div class="layui-layout layui-layout-admin">
+
+    <!-- 头部菜单栏 -->
+    {{include "./common/header.html"}}
+
+    <!-- 左侧菜单栏 -->
+    {{include "./common/leftMenu.html"}}
+
+
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <table id="demo" lay-filter="test"></table>
+    </div>
+
+
+    <!-- 底部 -->
+    {{include "./common/footer.html"}}
+
+</div>
+
+{{/block}}
+
+
+
+
+
+{{block 'script'}}
+
+<script src="/layui/layui.js"></script>
+<script>
+    layui.use(['element', 'layer', 'util'], function () {
+        var element = layui.element,
+            layer = layui.layer,
+            util = layui.util,
+            $ = layui.$;
+
+        //头部事件
+        util.event('lay-header-event', {
+            //左侧菜单事件
+            menuLeft: function (othis) {
+                layer.msg('展开左侧菜单的操作111', {
+                    icon: 0
+                });
+            },
+            menuRight: function () {
+                layer.open({
+                    type: 1,
+                    content: '<div style="padding: 15px;">处理右侧面板的操作234</div>',
+                    area: ['260px', '100%'],
+                    offset: 'rt', //右上角
+                    anim: 5,
+                    shadeClose: true
+                });
+            }
+        });
+    })
+
+    layui.use('table', function () {
+        var table = layui.table;
+
+        //第一个实例
+        table.render({
+            elem: '#demo',
+            height: 312,
+            url: '/getClassificationList', //数据接口
+            page: true, //开启分页
+            cols: [
+                [ //表头
+                    {
+                        field: 'cate_id',
+                        title: 'ID',
+                        width: 80,
+                        sort: true,
+                        // fixed: 'left'
+                    }, {
+                        field: 'cate_name',
+                        title: '分类名称',
+                        width: 100
+                    }, {
+                        field: 'sum',
+                        title: '总数',
+                        width: 80,
+                        sort: true
+                    },
+                ]
+            ]
+        });
+
+    });
+</script>
+
+{{/block}}
