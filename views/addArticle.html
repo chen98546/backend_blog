@@ -1,0 +1,131 @@
+<!-- 继承公共模板 -->
+{{extend './common/page.html'}}
+
+
+
+<!-- 头部区域 -->
+{{block 'title'}}
+
+<title>博客后台添加</title>
+<link rel="stylesheet" href="/layui/css/layui.css">
+<style>
+    h1 {
+        text-align: center;
+    }
+
+    #form {
+        width: 350px;
+        margin: 0 auto;
+    }
+
+    #uploadsImg {
+        width: 300px;
+    }
+</style>
+{{/block}}
+
+
+
+
+<!-- body主体内容区域 -->
+{{block 'content'}}
+
+<h1>添加界面</h1>
+<form class="layui-form" id="form" active="/addArticleData" method="post">
+    <!-- <div class="layui-form-item">
+        <label class="layui-form-label">id</label>
+        <div class="layui-input-inline">
+            <input type="text" name="id" required lay-verify="required" placeholder="id" autocomplete="off" value="1111"
+                class="layui-input">
+        </div>
+    </div> -->
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">标题</label>
+        <div class="layui-input-inline">
+            <input type="text" name="title" required lay-verify="required" placeholder="标题" autocomplete="off"
+                class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">作者</label>
+        <div class="layui-input-inline">
+            <input type="text" name="author" required lay-verify="required" placeholder="作者" autocomplete="off"
+                class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">审核</label>
+        <div class="layui-input-inline">
+            <input type="text" name="status" required lay-verify=" required" placeholder="审核" autocomplete="off"
+                class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">添加时间</label>
+        <div class="layui-input-inline">
+            <input type="text" name="add_date" required lay-verify="required" placeholder="添加时间" autocomplete="off"
+                id="add_time" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">分类ID</label>
+        <div class="layui-input-inline">
+            <input type="text" name="cate_id" required lay-verify="required" placeholder="分类ID" autocomplete="off"
+                class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">文章内容</label>
+        <div class="layui-input-block">
+            <textarea name="content" placeholder="请输入文章内容" class="layui-textarea"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="addArticle">添加</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+
+</form>
+
+{{/block}}
+
+
+
+
+{{block 'script'}}
+
+<script src="/layui/layui.js"></script>
+<script>
+    layui.use('form', function () {
+        let form = layui.form;
+        let laydate = layui.laydate;
+        let layer = layui.layer;
+        let $ = layui.$;
+
+        laydate.render({
+            elem: '#add_time',
+            type:'datetime'
+        })
+
+        form.on('submit(addArticle)', function (data) {
+            $.ajax({
+                type: 'post',
+                url: 'http://127.0.0.1:12580/addArticleData',
+                data: data.field,
+            }).then(res => {
+                location.href = '/articleList'
+            })
+        })
+    })
+</script>
+
+{{/block}}
