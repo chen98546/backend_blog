@@ -59,8 +59,19 @@
                 return false
             }
 
+            $.post('/loginData', data.field).then(res => {
+                if (res.code === 0) {
+                    location.href = '/';
+                } else {
+                    layer.msg(res.message);
+                }
+
+            })
+            return false
+
 
         });
+
     });
 </script>
 

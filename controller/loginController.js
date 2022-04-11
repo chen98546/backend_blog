@@ -11,8 +11,6 @@ let loginController = {
     },
 }
 
-
-
 // 验证
 loginController.loginData = async (req, res) => {
     let {
@@ -21,31 +19,22 @@ loginController.loginData = async (req, res) => {
     } = req.body;
     // 加密
     password = md5(`${password}${pass_secret}`)
-    let sql = 'select * from users';
-    let data = await query(sql);
+    let sql = `select * from users where username='${username}' and password='${password}'`;
+    let data = await query(sql)
 
 
-    let result = data.find(item => {
-
-        let {
-            username: u,
-            password: p
-        } = item;
-        if (u === username && p === password) {
-            return true;
-        } else {
-            return false;
-        }
-
-    })
-
-    if (result) {
-        req.session.record = result;
-        res.redirect('/')
+    if (data.length > 0) {
+        req.session.record = data[0];
+        res.json({
+            code: 0,
+            message: '登录成功'
+        })
     } else {
-        res.redirect('/login')
+        res.json({
+            code: 1,
+            message: '用户名或密码错误'
+        })
     }
-
 }
 
 
@@ -56,7 +45,7 @@ loginController.logout = (req, res) => {
             throw err;
         }
     })
-    res.send('退出')
+    res.send('退出登录')
 }
 
 
