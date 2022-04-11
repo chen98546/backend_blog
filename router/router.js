@@ -6,6 +6,8 @@ let router = express.Router();
 let indexController = require('../controller/indexController.js');
 // 登录控制器
 let loginController = require('../controller/loginController.js');
+// 注册控制器
+let registerController = require('../controller/registerController.js');
 // 设置控制器
 let setController = require('../controller/setController.js');
 // 分类控制器
@@ -47,6 +49,19 @@ router.post('/loginData', loginData);
 router.post('/logout', logout);
 
 
+
+
+
+// 注册 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+let {
+    register, // 页面
+    registerData, // 
+} = registerController;
+
+
+router.get('/register', register);
+router.post('/registerData', registerData);
 
 
 

@@ -21,7 +21,7 @@ loginController.loginData = async (req, res) => {
     password = md5(`${password}${pass_secret}`)
     let sql = `select * from users where username='${username}' and password='${password}'`;
     let data = await query(sql)
-
+    
 
     if (data.length > 0) {
         req.session.record = data[0];

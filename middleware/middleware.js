@@ -2,7 +2,7 @@ let middleware = {};
 
 middleware.checkSessionAuth = (req, res, next) => {
     let reqPath = req.path.toLowerCase();
-    let notAuth = ['/login', '/logindata']
+    let notAuth = ['/register', '/registerdata', '/login', '/logindata']
     if (notAuth.includes(reqPath)) {
         next();
     } else {

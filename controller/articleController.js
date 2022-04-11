@@ -77,8 +77,6 @@ articleController.addArticleData = async (req, res) => {
         cate_id
     } = req.body;
     let sql = `insert into article(title,content,author,status,add_date,cate_id) values('${title}','${content}',${author},${status},'${add_date}',${cate_id})`;
-
-    // let sql = `update article set title='${title}',content='${content}',author=${author},status=${status},add_date='${add_date}',cate_id=${cate_id}  where id=${id}`;
     let data = await query(sql);
     res.send('修改成功');
 

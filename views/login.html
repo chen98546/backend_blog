@@ -32,6 +32,10 @@
             <button id="loginBtn" class="btn-primary btn-block btn-large layui-btn" lay-submit
                 lay-filter="loginBtn">登录</button>
         </div>
+
+        <div class="layui-form-item">
+            <a href="/register" id="registerLink" class="btn-primary btn-block btn-large layui-btn" lay-submit>注册</a>
+        </div>
     </form>
 
 </div>
@@ -51,10 +55,11 @@
 <script>
     layui.use('form', function () {
         var form = layui.form;
-
+        // 判断input值是否为空的正则表达式
+        let reg = /^\s*$/;
         //监听提交
         form.on('submit(loginBtn)', function (data) {
-            if (!data.field.username || !data.field.password) {
+            if (reg.test(data.field.username) || reg.test(data.field.password)) {
                 layer.msg('账号或密码不能为空')
                 return false
             }
@@ -65,13 +70,9 @@
                 } else {
                     layer.msg(res.message);
                 }
-
             })
             return false
-
-
         });
-
     });
 </script>
 
