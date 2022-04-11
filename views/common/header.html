@@ -1,3 +1,14 @@
+<link rel="stylesheet" href="/css/login.css">
+<style>
+    .layui-layer-title {
+        background-color: #b1b1b1;
+    }
+
+    .layui-layer-content {
+        background-color: #282b33;
+    }
+</style>
+
 <!-- 头部菜单 -->
 <div class="layui-header">
     <div class="layui-logo layui-hide-xs layui-bg-black"></div>
@@ -28,7 +39,7 @@
                 <span>{{uname}}</span>
             </a>
             <dl class="layui-nav-child">
-                <dd><a href="">个人信息</a></dd>
+                <dd><a href="javascript:;" id="userInfo">个人信息</a></dd>
                 <dd><a href="">修改密码</a></dd>
                 <dd><a href="javascript:;" id="logout">退出</a></dd>
             </dl>
@@ -42,14 +53,7 @@
 </div>
 
 <script src="/js/jquery.min.js"></script>
+<script src="/layui/layui.js"></script>
 <script>
-    // 退出登录
-    $('#logout').click(function () {
-        $.ajax({
-            type: 'post',
-            url: '/logout',
-        }).then(res => {
-            location.href = '/login'
-        })
-    })
+   
 </script>

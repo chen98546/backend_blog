@@ -116,6 +116,7 @@ router.post('/addArticleData', addArticleData);
 let {
     settings, // 页面
     settingsPut, // 修改
+    amendForm,
 } = setController
 
 // 页面
@@ -123,6 +124,9 @@ router.get('/settings', settings);
 
 // 修改
 router.put('/settingsPut', settingsPut);
+
+
+router.put('/amendForm', amendForm);
 
 
 

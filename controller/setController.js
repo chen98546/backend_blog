@@ -19,4 +19,15 @@ setController.settingsPut = async (req, res) => {
     res.json(data)
 }
 
+
+setController.amendForm = async (req, res) => {
+    let {
+        username
+    } = req.body;
+    console.log(username);
+    let sql = `update settings set username='${username}'`;
+    let data = await query(sql);
+    res.json(data)
+}
+
 module.exports = setController;
