@@ -20,12 +20,23 @@
 
 <div class="login">
     <h1>博客后台登录系统</h1>
-    <form method="post">
-        <input type="text" name="username" placeholder="Username" autocomplete="off" />
-        <input type="password" name="password" placeholder="Password" autocomplete />
-        <button type="submit" id="loginBtn" class="btn btn-primary btn-block btn-large">Login In</button>
+    <form class="layui-form" action="/loginData" method="post" id="loginForm">
+        <div class="layui-form-item">
+            <input type="text" name="username" placeholder="请输入用户名称" autocomplete="off">
+        </div>
+        <div class="layui-form-item">
+            <input type="password" name="password" placeholder="请输入账号密码" autocomplete="off">
+        </div>
+
+        <div class="layui-form-item">
+            <button id="loginBtn" class="btn-primary btn-block btn-large layui-btn" lay-submit
+                lay-filter="loginBtn">登录</button>
+        </div>
     </form>
+
 </div>
+
+
 
 {{/block}}
 
@@ -38,10 +49,19 @@
 <script src="/js/jquery.min.js"></script>
 <script src="/layui/layui.js"></script>
 <script>
-    $("#loginBtn").on('click', () => {
-        layer.msg('login')
-        return false;
-    })
+    layui.use('form', function () {
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(loginBtn)', function (data) {
+            if (!data.field.username || !data.field.password) {
+                layer.msg('账号或密码不能为空')
+                return false
+            }
+
+
+        });
+    });
 </script>
 
 {{/block}}

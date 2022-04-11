@@ -32,11 +32,19 @@ router.get('/getIndexData', getIndexData);
 
 // 登录 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 let {
-    getLogin, // 后台登录页面
+    getLogin, // 页面
+    loginData, // 验证
+    logout, // 退出
 } = loginController;
 
-// 后台登录页面
+// 页面
 router.get('/login', getLogin);
+
+// 验证
+router.post('/loginData', loginData);
+
+// 退出
+router.post('/logout', logout);
 
 
 

@@ -25,12 +25,12 @@
             <a href="javascript:;">
                 <!-- <img src="https://img2.baidu.com/it/u=1012304310,3936720750&fm=26&fmt=auto&gp=0.jpg" class="layui-nav-img"> -->
                 <img src="headPortrait.jpg" class="layui-nav-img" alt="">
-                小白
+                <span>{{uname}}</span>
             </a>
             <dl class="layui-nav-child">
                 <dd><a href="">个人信息</a></dd>
                 <dd><a href="">修改密码</a></dd>
-                <dd><a href="./login.html">退出</a></dd>
+                <dd><a href="javascript:;" id="logout">退出</a></dd>
             </dl>
         </li>
         <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>
@@ -40,3 +40,16 @@
         </li>
     </ul>
 </div>
+
+<script src="/js/jquery.min.js"></script>
+<script>
+    // 退出登录
+    $('#logout').click(function () {
+        $.ajax({
+            type: 'post',
+            url: '/logout',
+        }).then(res => {
+            location.href = '/login'
+        })
+    })
+</script>
