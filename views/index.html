@@ -1,3 +1,5 @@
+<!-- 后台首页 -->
+
 <!-- 继承公共模板 -->
 {{extend './common/page.html'}}
 
@@ -6,7 +8,12 @@
 <!-- 头部区域 -->
 {{block 'title'}}
 <title>博客后台管理系统</title>
-<link rel="stylesheet" href="/layui/css/layui.css">
+<style>
+  #main {
+    margin: 80px auto;
+  }
+</style>
+
 {{/block}}
 
 <!-- body主体内容区域 -->
@@ -23,7 +30,9 @@
 
   <div class="layui-body">
     <!-- 内容主体区域 -->
-    <div style="padding: 15px;" id="content">123123</div>
+    <div style="padding: 15px;" id="content">
+      <div id="main" style="width: 800px;height:400px;"></div>
+    </div>
   </div>
 
 
@@ -39,7 +48,53 @@
 
 <!-- js内容区域 -->
 {{block 'script'}}
-<script src="/layui/layui.js"></script>
-<script src="/js/layuiCommon.js"></script>
+<script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+
+<script>
+  let myChart = echarts.init(document.getElementById('main'))
+
+  function chartFn(cateName, cateNum) {
+    let option = {
+      title: {
+        text: '分类文章统计',
+
+      },
+      tooltip: {},
+      legend: {
+        data: ['文章分类统计图']
+      },
+      xAxis: {
+        data: cateName
+      },
+      yAxis: {},
+      series: [{
+        name: '文章分类统计图',
+        data: cateNum,
+        type: 'bar',
+        itemStyle: {
+          color: '#99a7c3'
+        }
+      }]
+    };
+
+    myChart.setOption(option);
+
+  }
+
+
+  $.ajax({
+    type: 'get',
+    url: '/getClassificationList',
+    dataType: 'json',
+  }).then(res => {
+    let cateName = [];
+    let cateNum = [];
+    res.data.forEach(item => {
+      cateName.push(item.cate_name);
+      cateNum.push(item.sum);
+    })
+    chartFn(cateName, cateNum);
+  })
+</script>
 
 {{/block}}

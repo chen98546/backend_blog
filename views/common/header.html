@@ -1,15 +1,47 @@
-<link rel="stylesheet" href="/css/login.css">
+<!-- 头部菜单 -->
+
 <style>
-    .layui-layer-title {
-        background-color: #b1b1b1;
+    #setNewInfo input,
+    #editUserPwd input {
+        width: 300px;
+        text-shadow: none;
+        box-shadow: none;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: none;
+        color: #333;
     }
 
-    .layui-layer-content {
-        background-color: #282b33;
+    #setNewInfo h1,
+    #editUserPwd h1 {
+        color: #333;
+        text-shadow: none;
+    }
+
+
+
+    #setNewInfo #amendForm #avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+        margin: 0 auto 20px;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    #setNewInfo #amendForm #avatar #avatarImg {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+    }
+
+
+    #setNewInfo #amendForm #avatar #avatarFile {
+        display: none;
     }
 </style>
 
-<!-- 头部菜单 -->
 <div class="layui-header">
     <div class="layui-logo layui-hide-xs layui-bg-black"></div>
     <!-- 头部区域（可配合layui 已有的水平导航） -->
@@ -33,14 +65,14 @@
     </ul>
     <ul class="layui-nav layui-layout-right">
         <li class="layui-nav-item layui-hide layui-show-md-inline-block">
-            <a href="javascript:;">
+            <a href="javascript:;" id="link">
                 <!-- <img src="https://img2.baidu.com/it/u=1012304310,3936720750&fm=26&fmt=auto&gp=0.jpg" class="layui-nav-img"> -->
-                <img src="headPortrait.jpg" class="layui-nav-img" alt="">
-                <span>{{uname}}</span>
+                <!-- <img src="" id="setAvatar" class="layui-nav-img" alt="">
+                <span id="uname">{{uname}}</span> -->
             </a>
             <dl class="layui-nav-child">
                 <dd><a href="javascript:;" id="userInfo">个人信息</a></dd>
-                <dd><a href="">修改密码</a></dd>
+                <dd><a href="javascript:;" id="editPassword">修改密码</a></dd>
                 <dd><a href="javascript:;" id="logout">退出</a></dd>
             </dl>
         </li>
@@ -52,8 +84,12 @@
     </ul>
 </div>
 
-<script src="/js/jquery.min.js"></script>
-<script src="/layui/layui.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <script>
-   
-</script>
+    let cookieInfo = Cookies.getJSON('userInfo');
+    let str = `<img src="${cookieInfo.avatar}" id="setAvatar" class="layui-nav-img" alt="">
+    <span id="uname">${cookieInfo.username}</span>`
+    let getItem = localStorage.getItem("logoName");
+    document.getElementById("link").innerHTML = str;
+    document.querySelector(".layui-logo").innerHTML = getItem ? getItem : "后台管理系统";
+</script> -->

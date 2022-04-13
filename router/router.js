@@ -1,6 +1,11 @@
 let express = require('express');
+let multer = require('multer');
+
 let router = express.Router();
 
+let upload = multer({
+    dest: 'uploads/'
+});
 
 // 主页控制器
 let indexController = require('../controller/indexController.js');
@@ -32,6 +37,8 @@ router.get('/getIndexData', getIndexData);
 
 
 
+
+
 // 登录 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 let {
     getLogin, // 页面
@@ -56,11 +63,13 @@ router.post('/logout', logout);
 
 let {
     register, // 页面
-    registerData, // 
+    registerData, // 注册数据
 } = registerController;
 
-
+// 页面
 router.get('/register', register);
+
+// 注册数据
 router.post('/registerData', registerData);
 
 
@@ -106,7 +115,7 @@ router.delete('/deleteArticle', deleteArticle);
 // 修改
 router.put('/updateArticle', updateArticle);
 
-// 修改
+// 添加
 router.post('/addArticleData', addArticleData);
 
 
@@ -115,18 +124,22 @@ router.post('/addArticleData', addArticleData);
 // 设置 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 let {
     settings, // 页面
-    settingsPut, // 修改
-    amendForm,
+    settingsPut, // logo名修改
+    amendForm, // 个人资料修改
+    editPwdForm, // 密码修改
 } = setController
 
 // 页面
 router.get('/settings', settings);
 
-// 修改
+// logo名修改
 router.put('/settingsPut', settingsPut);
 
+// 个人资料修改
+router.put('/amendForm', upload.single("avatar"), amendForm);
 
-router.put('/amendForm', amendForm);
+// 密码修改
+router.put('/editPwdForm', editPwdForm)
 
 
 

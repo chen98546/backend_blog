@@ -1,3 +1,5 @@
+<!-- 添加页面 -->
+
 <!-- 继承公共模板 -->
 {{extend './common/page.html'}}
 
@@ -7,19 +9,39 @@
 {{block 'title'}}
 
 <title>博客后台添加</title>
-<link rel="stylesheet" href="/layui/css/layui.css">
 <style>
+    body {
+        background: #fff;
+    }
+
     h1 {
+        margin: 20px 0;
         text-align: center;
     }
 
     #form {
-        width: 350px;
+        width: 450px;
         margin: 0 auto;
     }
 
     #uploadsImg {
         width: 300px;
+    }
+
+    #form input {
+        width: 240px;
+        text-shadow: none;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: none;
+    }
+
+    .layui-form-label {
+        width: 110px;
+    }
+
+    .layui-textarea {
+        width: 240px;
     }
 </style>
 {{/block}}
@@ -51,7 +73,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">作者</label>
         <div class="layui-input-inline">
-            <input type="text" name="author" required lay-verify="required" placeholder="作者" autocomplete="off"
+            <input type="number" name="author" required lay-verify="required" placeholder="作者" autocomplete="off"
                 class="layui-input">
         </div>
     </div>
@@ -75,7 +97,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">分类ID</label>
         <div class="layui-input-inline">
-            <input type="text" name="cate_id" required lay-verify="required" placeholder="分类ID" autocomplete="off"
+            <input type="number" name="classify_id" required lay-verify="required" placeholder="分类ID" autocomplete="off"
                 class="layui-input">
         </div>
     </div>
@@ -103,20 +125,27 @@
 
 {{block 'script'}}
 
-<script src="/layui/layui.js"></script>
 <script>
     layui.use('form', function () {
         let form = layui.form;
         let laydate = layui.laydate;
         let layer = layui.layer;
-        let $ = layui.$;
 
         laydate.render({
             elem: '#add_time',
-            type:'datetime'
+            type: 'datetime'
         })
 
         form.on('submit(addArticle)', function (data) {
+            let content = data.field.content;
+
+            // 正则空值判断
+            let reg = /^\s*$/;
+            if (reg.test(content)) {
+                layer.msg('文章内容不能为空');
+                return false;
+            }
+
             $.ajax({
                 type: 'post',
                 url: 'http://127.0.0.1:12580/addArticleData',

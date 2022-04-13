@@ -1,3 +1,5 @@
+<!-- 分类列表 -->
+
 <!-- 继承公共模板 -->
 {{extend './common/page.html'}}
 
@@ -7,7 +9,7 @@
 {{block 'title'}}
 
 <title>博客后台管理系统</title>
-<link rel="stylesheet" href="/layui/css/layui.css">
+
 <style>
     .layui-table-cell {
         text-align: center;
@@ -50,8 +52,6 @@
 
 {{block 'script'}}
 
-<script src="/layui/layui.js"></script>
-<script src="/js/layuiCommon.js"></script>
 
 <script>
     layui.use(['table'], function () {

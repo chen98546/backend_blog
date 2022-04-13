@@ -1,3 +1,5 @@
+<!-- 注册 -->
+
 <!-- 继承公共模板 -->
 {{extend './common/page.html'}}
 
@@ -7,8 +9,7 @@
 {{block 'title'}}
 
 <title>博客后台登录系统</title>
-<link rel="stylesheet" href="/layui/css/layui.css">
-<link rel="stylesheet" href="/css/login.css">
+
 <style>
     #intro {
         width: 300px;
@@ -16,6 +17,7 @@
         border-color: #242130;
         padding: 5px 9px;
         border-radius: 4px;
+        color: #fff;
     }
 </style>
 {{/block}}
@@ -68,16 +70,16 @@
 
 {{block 'script'}}
 
-<!-- <script src="/js/jquery.min.js"></script> -->
-<script src="/layui/layui.js"></script>
+
 <script>
-    layui.use('form', function () {
+    layui.use(['form', 'layer'], function () {
+        let layer = layui.layer;
         let form = layui.form;
         let $ = layui.$;
         // 判断input值是否为空的正则表达式
         let reg = /^\s*$/;
         // 判断用户名是否正确的正则表达式
-        let regUser = /^[a-zA-Z0-9_\u4e00-\u9fa5]{5,15}$/;
+        let regUser = /^[a-zA-Z0-9_\u4e00-\u9fa5]{2,12}$/;
         // 判断密码是否正确的正则表达式
         let regPwd = /^[a-zA-Z0-9_]{6,15}$/;
         // 特殊字符正则表达式
@@ -103,14 +105,17 @@
                 data: data.field,
             }).then(res => {
                 if (res.code == 0) {
-                    layer.msg(res.message);
-                    location.href = '/login'
+                    layer.confirm('返回登录', {
+                        icon: 3,
+                        title: res.message
+                    }, function (index) {
+                        location.href = '/login';
+                        layer.close(index);
+                    });
                 }
             })
+            return false;
         })
-
-        return false;
-
     });
 </script>
 

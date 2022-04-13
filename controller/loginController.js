@@ -1,3 +1,5 @@
+// 登录控制器
+
 let md5 = require('md5')
 let query = require('../mysql/connection.js');
 let {
@@ -21,10 +23,13 @@ loginController.loginData = async (req, res) => {
     password = md5(`${password}${pass_secret}`)
     let sql = `select * from users where username='${username}' and password='${password}'`;
     let data = await query(sql)
-    
 
     if (data.length > 0) {
         req.session.record = data[0];
+        res.cookie('userInfo', JSON.stringify(data[0]), {
+            maxAge: 1000 * 60 * 60 * 24 * 7
+        })
+
         res.json({
             code: 0,
             message: '登录成功'

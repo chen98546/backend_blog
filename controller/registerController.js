@@ -1,3 +1,10 @@
+// 注册控制器
+
+let md5 = require('md5')
+
+let {
+    pass_secret // 解构密钥
+} = require('../config/pass_secret.js')
 let query = require('../mysql/connection.js');
 
 let registerController = {
@@ -13,6 +20,7 @@ registerController.registerData = async (req, res) => {
         author,
         intro
     } = req.body;
+    password = md5(`${password}${pass_secret}`);
     let sql = `insert into users (username,password,intro) values ('${username}','${password}','${intro}')`;
     let data = await query(sql);
     if (data.affectedRows > 0) {
