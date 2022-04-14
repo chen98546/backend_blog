@@ -23,6 +23,7 @@ registerController.registerData = async (req, res) => {
     password = md5(`${password}${pass_secret}`);
     let sql = `insert into users (username,password,intro) values ('${username}','${password}','${intro}')`;
     let data = await query(sql);
+
     if (data.affectedRows > 0) {
         res.json({
             code: 0,

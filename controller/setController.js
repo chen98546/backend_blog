@@ -31,25 +31,37 @@ setController.amendForm = async (req, res) => {
     let {
         username,
         avatar,
+        pic,
+        isEditUserInfo
     } = req.body;
-
-    let {
-        originalname,
-        destination,
-        filename
-    } = req.file
-
-    let exName = path.extname(originalname);
-    fs.renameSync(
-        path.join(`${path.dirname(__dirname)}/${destination+filename}`),
-        path.join(`${path.dirname(__dirname)}/${destination+filename+ exName}`)
-    );
-    avatar = filename + exName;
-
     let {
         id
     } = req.session.record;
-    let sql = `update users set username='${username}',avatar='${avatar}' where id = ${id}`;
+
+    if (isEditUserInfo == 1) {
+        let {
+            originalname,
+            destination,
+            filename
+        } = req.file
+
+
+        let exName = path.extname(originalname);
+        // 原图路径
+        pic = path.join(`${path.dirname(__dirname)}/${destination+pic}`)
+
+        fs.renameSync(
+            path.join(`${path.dirname(__dirname)}/${destination+filename}`),
+            path.join(`${path.dirname(__dirname)}/${destination+filename+ exName}`)
+        );
+        avatar = filename + exName;
+        sql = `update users set username='${username}',avatar='${avatar}' where id = ${id}`;
+        // 删除原图
+        fs.unlink(pic, (err) => {})
+    } else {
+        sql = `update users set username='${username}' where id = ${id}`;
+    }
+
     let {
         affectedRows
     } = await query(sql);

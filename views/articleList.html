@@ -90,6 +90,7 @@
     // 工具条事件
     layui.use(["table"], function (data) {
         let table = layui.table;
+        
         // 动态表格展示数据
         table.render({
             elem: "#table",
@@ -145,8 +146,8 @@
                 ],
             ],
 
-
         });
+        status == 1 ? '审核通过' : '未审核';
 
         // 编辑
         table.on("edit(table)", function (obj) {

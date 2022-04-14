@@ -1,34 +1,14 @@
 // 公共js配置
 
-
-let reg = /^\s*$/;
+let reg = /^\s*$/; // 正则空值判断
 let cookieInfo = JSON.parse(Cookies.get('userInfo'));
-
 $("#setAvatar").attr('src', cookieInfo.avatar);
 
-let str = `<img src="${cookieInfo.avatar}" id="setAvatar" class="layui-nav-img" alt="">
-    <span id="uname">${cookieInfo.username}</span>`;
-document.getElementById("link").innerHTML = str;
-
-let getItem = localStorage.getItem("logoName");
-document.querySelector(".layui-logo").innerHTML = getItem ? getItem : "后台管理系统";
 
 layui.use(["element", "layer", "util", "form"], function () {
   let layer = layui.layer,
     util = layui.util,
-    form = layui.form,
-    $ = layui.$;
-
-  // 退出登录
-  $("#logout").click(function () {
-    $.ajax({
-      type: "post",
-      url: "/logout",
-    }).then((res) => {
-      location.href = "/login";
-    });
-  });
-
+    form = layui.form;
 
   // 左右两侧菜单
   function menuFn() {
@@ -55,10 +35,21 @@ layui.use(["element", "layer", "util", "form"], function () {
   menuFn();
 
 
+  // 退出登录
+  function logoutFn() {
+    $("#logout").click(async function () {
+      await $.post("/logout")
+      layer.confirm('确认退出', function () {
+        location.reload();
+      })
+    });
+  }
+  logoutFn()
 
   // 设置用户个人信息
   function setUserInfoFn() {
     let index;
+    let isEditUserInfo = 0;
 
     // 个人信息弹窗
     $('#userInfo').click(function () {
@@ -85,6 +76,12 @@ layui.use(["element", "layer", "util", "form"], function () {
                   </div>
               </form> 
           </div>`,
+
+        // 右上角关闭回调函数
+        cancel: function () {
+          $('#setAvatar').attr('src', userCookieInfo.avatar);
+          isEditUserInfo = 0;
+        }
       });
 
       // 个人资料回显
@@ -107,35 +104,53 @@ layui.use(["element", "layer", "util", "form"], function () {
       reader.onload = function () {
         $('#avatarImg').attr('src', this.result);
         $("#setAvatar").attr('src', this.result);
+        isEditUserInfo = 1;
       }
     })
+
+
 
 
     // 监听表单
     form.on("submit(amendBtn)", function (data) {
       let formData = new FormData($('#amendForm')[0]);
+      let formCookieInfo = JSON.parse(Cookies.get('userInfo'));
+
+      formData.set('pic', formCookieInfo.avatar);
+      formData.set('isEditUserInfo', isEditUserInfo);
 
       if (reg.test(data.field.username)) {
         layer.msg("请输入新昵称");
         return false;
-      } else if (reg.test(data.field.avatar)) {
-        layer.msg("请选择头像");
-        return false;
       }
 
-      $.ajax({
-        type: "put",
-        url: "/amendForm",
-        data: formData,
-        contentType: false,
-        processData: false,
-      }).then(res => {
-        $('#uname').text(res[0].username);
-        $('#avatarImg').attr('src', res[0].avatar);
-        $("#setAvatar").attr('src', res[0].avatar);
-        layer.msg("资料修改成功");
-        layer.close(index)
-      });
+      $.get('/getUserData').then(res => {
+        let result = res.find(item => {
+          let uname = item.username == data.field.username;
+          return uname;
+        })
+
+        let uname = data.field.username == formCookieInfo.username
+
+        if (result && !uname) {
+          layer.msg('该用户名已被占用')
+          return false
+        } else {
+          $.ajax({
+            type: "put",
+            url: "/amendForm",
+            data: formData,
+            contentType: false,
+            processData: false,
+          }).then(res => {
+            $('#uname').text(res[0].username);
+            $('#avatarImg').attr('src', res[0].avatar);
+            $("#setAvatar").attr('src', res[0].avatar);
+            layer.msg("资料修改成功");
+            layer.close(index)
+          });
+        }
+      })
       return false;
     });
   }
@@ -145,6 +160,9 @@ layui.use(["element", "layer", "util", "form"], function () {
   // 修改密码
   function editPwdFn() {
     let index;
+    let timer;
+    clearTimeout(timer);
+
     $(document).on('click', '#editPassword', function () {
       index = layer.open({
         type: 1,
@@ -190,12 +208,20 @@ layui.use(["element", "layer", "util", "form"], function () {
           return false;
         };
 
-
         if (res.code === 0) {
           layer.msg(res.message)
           layer.close(index);
-          location.reload();
+
+          timer = setTimeout(() => {
+            layer.alert('身份有效期失效,请返回重新登录', function (alert) {
+              layer.close(alert, function () {
+                location.reload();
+              });
+            });
+          }, 500);
+
         }
+
       })
       return false
     })

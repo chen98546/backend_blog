@@ -9,6 +9,8 @@ let upload = multer({
 
 // 主页控制器
 let indexController = require('../controller/indexController.js');
+// 用户控制器
+let userController = require('../controller/userController.js');
 // 登录控制器
 let loginController = require('../controller/loginController.js');
 // 注册控制器
@@ -34,6 +36,16 @@ router.get('/', getIndex);
 // 获取
 router.get('/getIndexData', getIndexData);
 
+
+
+
+
+// 用户 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+let {
+    getUserData,
+} = userController
+
+router.get('/getUserData', getUserData)
 
 
 
@@ -77,15 +89,23 @@ router.post('/registerData', registerData);
 
 // 分类 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 let {
-    classificationList, // 页面
+    classificationList, // 展示页面
+    addClassify, // 添加页面
     getClassificationList, // 获取
+    // addClassifyData, // 添加
 } = classController
 
-// 页面
+// 展示页面
 router.get('/classificationList', classificationList);
+
+// 添加页面
+router.get('/addClassify', addClassify);
 
 // 获取
 router.get('/getClassificationList', getClassificationList);
+
+// // 添加
+// router.post('/addClassifyData', addClassifyData);
 
 
 

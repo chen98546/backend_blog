@@ -84,12 +84,12 @@
     </ul>
 </div>
 
-<!-- <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <script>
-    let cookieInfo = Cookies.getJSON('userInfo');
-    let str = `<img src="${cookieInfo.avatar}" id="setAvatar" class="layui-nav-img" alt="">
-    <span id="uname">${cookieInfo.username}</span>`
-    let getItem = localStorage.getItem("logoName");
+    let headerCookieInfo = JSON.parse(Cookies.get('userInfo'));
+    let str = `<img src="${headerCookieInfo.avatar}" id="setAvatar" class="layui-nav-img" alt="">
+    <span id="uname">${headerCookieInfo.username}</span>`;
     document.getElementById("link").innerHTML = str;
+    let getItem = localStorage.getItem("logoName");
     document.querySelector(".layui-logo").innerHTML = getItem ? getItem : "后台管理系统";
-</script> -->
+</script>
